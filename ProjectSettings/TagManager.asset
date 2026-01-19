@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Obstacles
   - 
   - 
   - 
@@ -40,6 +40,9 @@ TagManager:
   m_SortingLayers:
   - name: tilemap
     uniqueID: 967669247
+    locked: 0
+  - name: floor
+    uniqueID: 1463835581
     locked: 0
   - name: Default
     uniqueID: 0
