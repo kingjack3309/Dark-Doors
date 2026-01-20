@@ -53,3 +53,9 @@ TagManager:
   - name: enemies
     uniqueID: 1588194691
     locked: 0
+  - name: doors
+    uniqueID: 2019441143
+    locked: 0
+  - name: pillars
+    uniqueID: 2944224437
+    locked: 0

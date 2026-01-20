@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
 
     private float horizontal;
     private float vertical;
-    private float speed = 5f;
+    private float speed = 7f;
 
     Rigidbody2D rb;
 
