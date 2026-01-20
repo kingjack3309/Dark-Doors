@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -25,6 +26,7 @@ public class VisionCone : MonoBehaviour
     void LateUpdate()
     {
         GenerateCone();
+        
     }
 
     void GenerateCone()
@@ -67,5 +69,38 @@ public class VisionCone : MonoBehaviour
         {
             visionLight.SetShapePath(vertices);
         }
+
+        List<Vector2> vertices2D = new List<Vector2>();
+        foreach (Vector3 vertex in mesh.vertices)
+        {
+            vertices2D.Add(new Vector2(vertex.x, vertex.y));
+        }
+
+        // Use PolygonCollider2D for a closed, filled shape
+        PolygonCollider2D polyCollider = GetComponent<PolygonCollider2D>();
+        if (polyCollider == null)
+        {
+            polyCollider = gameObject.AddComponent<PolygonCollider2D>();
+        }
+
+        // PolygonCollider2D can use the vertices to define its shape
+        polyCollider.points = vertices2D.ToArray();
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            Debug.Log("Enemy in sight");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            Debug.Log("Enemy out of sight");
+        }
+    }
+
 }
