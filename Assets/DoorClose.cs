@@ -6,6 +6,8 @@ public class DoorClose : MonoBehaviour
 {
     [SerializeField] GameObject closeDoor;
 
+    [SerializeField] GameObject e;
+
     private void OnTriggerStay2D()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -16,6 +18,22 @@ public class DoorClose : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.E))
         {
             StopCoroutine(closeDaDoor());
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            e.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            e.SetActive(false);
         }
     }
 
