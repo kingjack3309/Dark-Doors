@@ -10,16 +10,19 @@ public class DoorOpen : MonoBehaviour
 
     [SerializeField] GameObject e;
 
-    private void OnTriggerStay2D()
+    private void OnTriggerStay2D(Collider2D other)
     {
-        if (Input.GetKeyDown(KeyCode.E)) 
+        if (other.CompareTag("Player"))
         {
-            StartCoroutine(openDaDoor());
-        }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                StartCoroutine(openDaDoor());
+            }
 
-        if (Input.GetKeyUp(KeyCode.E))
-        {
-            StopCoroutine(openDaDoor());
+            if (Input.GetKeyUp(KeyCode.E))
+            {
+                StopCoroutine(openDaDoor());
+            }
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
