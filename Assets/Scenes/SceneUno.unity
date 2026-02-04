@@ -250,6 +250,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 246058445603208886, guid: ef9a915e2a6226d45bfbf486884794bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 462223487132898962, guid: ef9a915e2a6226d45bfbf486884794bf, type: 3}
       propertyPath: m_Mass
       value: 10
@@ -350,7 +354,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &411016911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -572,6 +576,73 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &981587352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 981587353}
+  - component: {fileID: 981587354}
+  m_Layer: 0
+  m_Name: DungeonGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &981587353
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981587352}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &981587354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981587352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5586bcc518a17634a8d67f371fbe3361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startRoomPrefab: {fileID: 4983857679561171472, guid: 5a7e9051adf4c8040b0a123b765c1208, type: 3}
+  hallwayPrefabs:
+  - {fileID: 970171325916249213, guid: eff1c53ff1717144d853f6214a7263c8, type: 3}
+  - {fileID: 5936943558015934191, guid: e24422a7409314342a1b9c383cf3fb58, type: 3}
+  - {fileID: 8855673467935445947, guid: ae40cca42b3fca84d8c5ecae3c8de030, type: 3}
+  - {fileID: 2389505537178312680, guid: b84677996d18085428ffd6e04fae3d54, type: 3}
+  - {fileID: 6752233041730809494, guid: bad5f857d09f50b4abc629eb2024cf65, type: 3}
+  - {fileID: 8395011407243846052, guid: c104ae7ef5906a8408e33fe766e52b46, type: 3}
+  - {fileID: 8299385121907315626, guid: a0592262188dab4419b4f1cb6bce1dda, type: 3}
+  - {fileID: 5297613302577841585, guid: 64d038f7807ee324a8bbee1874f12597, type: 3}
+  - {fileID: 5885077726449083455, guid: cf6f17eb7c1477346afa41a1b82de259, type: 3}
+  startPosition: {x: 0, y: 1, z: 0}
+  maxIterations: 50
+  clearOnGenerate: 1
+  randomizeAnchorOrder: 1
+  maxPrefabAttempts: 10
+  overlapTolerance: 0.05
+  randomSeed: 0
+  generateOnStart: 1
+  drawBounds: 1
+  logPlacementAttempts: 0
+  regenerateKey: 32
+  logDeadEnds: 1
 --- !u!1 &991458229
 GameObject:
   m_ObjectHideFlags: 0
@@ -1328,3 +1399,4 @@ SceneRoots:
   - {fileID: 1215521174}
   - {fileID: 411016912}
   - {fileID: 179557008}
+  - {fileID: 981587353}

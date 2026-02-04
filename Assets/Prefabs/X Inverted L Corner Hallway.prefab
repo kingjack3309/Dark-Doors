@@ -2485,6 +2485,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1959494839445281772}
   - component: {fileID: 5264682868871469593}
+  - component: {fileID: -4287195499871895229}
   m_Layer: 8
   m_Name: X Inverted L Corner Hallway
   m_TagString: Untagged
@@ -2559,6 +2560,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 22.7, y: 21.2}
   m_EdgeRadius: 0
+--- !u!114 &-4287195499871895229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8299385121907315626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 220ff4cf50f75d340aedde4384c5789b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!1001 &202543927697894289
 PrefabInstance:
   m_ObjectHideFlags: 0
