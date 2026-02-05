@@ -566,19 +566,28 @@ MonoBehaviour:
   - {fileID: 2389505537178312680, guid: b84677996d18085428ffd6e04fae3d54, type: 3}
   - {fileID: 6752233041730809494, guid: bad5f857d09f50b4abc629eb2024cf65, type: 3}
   - {fileID: 8395011407243846052, guid: c104ae7ef5906a8408e33fe766e52b46, type: 3}
-  - {fileID: 5383438626913757653, guid: a6f091fcc7cd8764bad59b9d532314d8, type: 3}
   - {fileID: 970171325916249213, guid: eff1c53ff1717144d853f6214a7263c8, type: 3}
   - {fileID: 8299385121907315626, guid: a0592262188dab4419b4f1cb6bce1dda, type: 3}
   - {fileID: 5297613302577841585, guid: 64d038f7807ee324a8bbee1874f12597, type: 3}
   - {fileID: 5885077726449083455, guid: cf6f17eb7c1477346afa41a1b82de259, type: 3}
+  roomPrefabs:
+  - {fileID: 5383438626913757653, guid: a6f091fcc7cd8764bad59b9d532314d8, type: 3}
   - {fileID: 2782657685984950792, guid: b9356ab2e8ca2144084c9dd51945691f, type: 3}
   - {fileID: 8133159697757360651, guid: aaeebdddc165b954aaf7958555f7ceb2, type: 3}
+  endRoomPrefab: {fileID: 3894953683336377960, guid: 21774329193a8d041a48a23d1573dc2a, type: 3}
+  endCapTop: {fileID: 6273064598112269603, guid: 9ae8a679ec30c9b4a98a9fb12c568350, type: 3}
+  endCapBottom: {fileID: 1166998583016927036, guid: f379e4e2adcc86049a076f47cde186c6, type: 3}
+  endCapLeft: {fileID: 5459856918699915879, guid: b6c2c0e726b27834da4dc2c56c2c24fa, type: 3}
+  endCapRight: {fileID: 1063204259696271311, guid: eac74e56fb0407644a9d4db28581150d, type: 3}
   startPosition: {x: 0, y: 1, z: 0}
   maxIterations: 400
+  roomSpawnChance: 20
   clearOnGenerate: 1
   randomizeAnchorOrder: 1
   maxPrefabAttempts: 12
   overlapTolerance: 0.5
+  roomAnchorTag: RoomAnchor
+  hallwayAnchorTag: HallwayAnchor
   randomSeed: 0
   generateOnStart: 1
   drawBounds: 1

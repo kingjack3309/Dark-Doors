@@ -7,22 +7,35 @@ public class DungeonGenerator : MonoBehaviour
     [Header("Prefabs")]
     public GameObject startRoomPrefab;
     public List<GameObject> hallwayPrefabs;
+    public List<GameObject> roomPrefabs;           // NEW: Special rooms that can't connect to each other
+    public GameObject endRoomPrefab;               // NEW: Must have an anchor on bottom (Direction.Bottom)
+
+    [Header("End Caps (Dead End Fillers)")]
+    public GameObject endCapTop;                   // For Direction.Top openings
+    public GameObject endCapBottom;                // For Direction.Bottom openings
+    public GameObject endCapLeft;                  // For Direction.Left openings
+    public GameObject endCapRight;                 // For Direction.Right openings
 
     [Header("Generation Settings")]
     public Vector3 startPosition = Vector3.zero;
     public int maxIterations = 50;
+    public int roomSpawnChance = 20;               // NEW: Percent chance to try a room instead of hallway
     public bool clearOnGenerate = true;
     public bool randomizeAnchorOrder = true;
     public int maxPrefabAttempts = 10;
-    [Range(0f, 0.5f)] public float overlapTolerance = 0.05f; // Allow slight touching but not penetrating
+    [Range(0f, 0.5f)] public float overlapTolerance = 0.05f;
+
+    [Header("Tags")]
+    public string roomAnchorTag = "RoomAnchor";    // NEW: Tag on room entrance anchors
+    public string hallwayAnchorTag = "HallwayAnchor"; // NEW: Tag on hallway anchors
 
     [Header("Random Seed (0 = Random)")]
     public int randomSeed = 0;
 
     [Header("Debug")]
     public bool generateOnStart = true;
-    public bool drawBounds = false;           // Visualize collision bounds in Scene view
-    public bool logPlacementAttempts = false; // Log every failed attempt
+    public bool drawBounds = false;
+    public bool logPlacementAttempts = false;
     public KeyCode regenerateKey = KeyCode.Space;
     public bool logDeadEnds = true;
 
@@ -63,6 +76,7 @@ public class DungeonGenerator : MonoBehaviour
         deadEndCount = 0;
         PlaceStartRoom();
 
+        // PHASE 1: Generate main dungeon
         int iterations = 0;
         while (openAnchors.Count > 0 && iterations < maxIterations)
         {
@@ -70,7 +84,13 @@ public class DungeonGenerator : MonoBehaviour
             iterations++;
         }
 
-        Debug.Log($"Generation complete: {placedPieces.Count} pieces, {deadEndCount} dead ends.");
+        // PHASE 2: Place end room on a remaining anchor
+        PlaceEndRoom();
+
+        // PHASE 3: Cap all remaining dead ends
+        CapAllDeadEnds();
+
+        Debug.Log($"Generation complete: {placedPieces.Count} pieces, {deadEndCount} dead ends capped.");
     }
 
     void PlaceStartRoom()
@@ -78,8 +98,6 @@ public class DungeonGenerator : MonoBehaviour
         GameObject instance = Instantiate(startRoomPrefab, startPosition, Quaternion.identity, transform);
         instance.name = "START_" + startRoomPrefab.name;
         placedPieces.Add(instance);
-
-        // Ensure physics is updated before we start checking against this
         UpdatePhysicsImmediately(instance);
         RegisterAnchors(instance);
     }
@@ -94,28 +112,62 @@ public class DungeonGenerator : MonoBehaviour
 
         if (targetAnchor == null || targetAnchor.isOccupied) return;
 
-        GameObject placedPiece = TryPlaceAnyPrefab(targetAnchor);
+        // NEW: Check what type of piece we're attaching TO
+        string targetTag = targetAnchor.gameObject.tag;
+        bool connectingToRoom = (targetTag == roomAnchorTag);
+        bool connectingToHallway = (targetTag == hallwayAnchorTag || string.IsNullOrEmpty(targetTag));
+
+        GameObject placedPiece = null;
+
+        if (connectingToRoom)
+        {
+            // NEW: Rooms can only connect to hallways, not other rooms
+            placedPiece = TryPlaceAnyPrefab(targetAnchor, hallwayPrefabs);
+        }
+        else if (connectingToHallway)
+        {
+            // NEW: Can be hallway or room (based on chance)
+            bool tryRoom = (roomPrefabs.Count > 0 && Random.Range(0, 100) < roomSpawnChance);
+
+            if (tryRoom)
+            {
+                placedPiece = TryPlaceAnyPrefab(targetAnchor, roomPrefabs);
+
+                if (placedPiece == null)
+                {
+                    if (logPlacementAttempts)
+                        Debug.Log($"Room placement failed at {targetAnchor.transform.position}, trying hallway");
+                    placedPiece = TryPlaceAnyPrefab(targetAnchor, hallwayPrefabs);
+                }
+            }
+            else
+            {
+                placedPiece = TryPlaceAnyPrefab(targetAnchor, hallwayPrefabs);
+            }
+        }
 
         if (placedPiece != null)
         {
             targetAnchor.isOccupied = true;
             placedPiece.transform.SetParent(transform);
             placedPieces.Add(placedPiece);
-            UpdatePhysicsImmediately(placedPiece); // Force collider update before next check
+            UpdatePhysicsImmediately(placedPiece);
             RegisterAnchors(placedPiece);
         }
         else
         {
-            targetAnchor.isOccupied = true;
-            deadEndCount++;
-            if (logDeadEnds)
-                Debug.Log($"Dead end at {targetAnchor.transform.position}");
+            // NEW: Don't mark as occupied - leave for end room or capping
+            if (!targetAnchor.isOccupied)
+                openAnchors.Add(targetAnchor);
         }
     }
 
-    GameObject TryPlaceAnyPrefab(Anchor targetAnchor)
+    // NEW: Overload that accepts specific prefab list
+    GameObject TryPlaceAnyPrefab(Anchor targetAnchor, List<GameObject> prefabList)
     {
-        List<GameObject> candidates = new List<GameObject>(hallwayPrefabs);
+        if (prefabList == null || prefabList.Count == 0) return null;
+
+        List<GameObject> candidates = new List<GameObject>(prefabList);
         ShuffleList(candidates);
 
         int attempts = Mathf.Min(candidates.Count, maxPrefabAttempts);
@@ -132,12 +184,15 @@ public class DungeonGenerator : MonoBehaviour
         return null;
     }
 
+    GameObject TryPlaceAnyPrefab(Anchor targetAnchor)
+    {
+        return TryPlaceAnyPrefab(targetAnchor, hallwayPrefabs);
+    }
+
     GameObject TryAttachSinglePrefab(GameObject prefab, Anchor targetAnchor)
     {
         GameObject temp = Instantiate(prefab);
         temp.name = "TEMP_" + prefab.name;
-
-        // Deactivate initially to prevent physics issues while positioning
         temp.SetActive(false);
 
         Anchor[] sourceAnchors = temp.GetComponentsInChildren<Anchor>();
@@ -147,14 +202,9 @@ public class DungeonGenerator : MonoBehaviour
             if (!AreOpposite(targetAnchor.direction, sourceAnchor.direction))
                 continue;
 
-            // Calculate position to align anchors
             Vector3 offset = targetAnchor.transform.position - sourceAnchor.transform.position;
             temp.transform.position = offset;
-
-            // Activate to ensure colliders are calculated
             temp.SetActive(true);
-
-            // Force physics update
             UpdatePhysicsImmediately(temp);
 
             if (!WouldOverlap(temp))
@@ -164,7 +214,6 @@ public class DungeonGenerator : MonoBehaviour
                 return temp;
             }
 
-            // Deactivate again to try next anchor position
             temp.SetActive(false);
         }
 
@@ -172,9 +221,133 @@ public class DungeonGenerator : MonoBehaviour
         return null;
     }
 
+    // NEW: Place end room on a remaining anchor
+    void PlaceEndRoom()
+    {
+        if (endRoomPrefab == null || openAnchors.Count == 0)
+        {
+            if (endRoomPrefab == null)
+                Debug.LogWarning("No end room prefab assigned");
+            return;
+        }
+
+        List<Anchor> candidates = new List<Anchor>(openAnchors);
+        ShuffleList(candidates);
+
+        foreach (var anchor in candidates)
+        {
+            if (anchor.isOccupied) continue;
+
+            GameObject result = TryAttachEndRoom(anchor);
+
+            if (result != null)
+            {
+                anchor.isOccupied = true;
+                result.transform.SetParent(transform);
+                result.name = "END_" + endRoomPrefab.name;
+                placedPieces.Add(result);
+                UpdatePhysicsImmediately(result);
+
+                Debug.Log($"Placed end room at {anchor.transform.position}");
+                openAnchors.Remove(anchor);
+                return;
+            }
+        }
+
+        Debug.LogWarning("Could not place end room - no valid anchor found");
+    }
+
+    // NEW: Special attachment for end room (requires bottom anchor)
+    GameObject TryAttachEndRoom(Anchor targetAnchor)
+    {
+        GameObject temp = Instantiate(endRoomPrefab);
+        temp.name = "TEMP_ENDROOM";
+        temp.SetActive(false);
+
+        Anchor[] sourceAnchors = temp.GetComponentsInChildren<Anchor>();
+
+        foreach (var sourceAnchor in sourceAnchors)
+        {
+            if (sourceAnchor.direction != Direction.Bottom)
+                continue;
+
+            if (targetAnchor.direction != Direction.Top)
+                continue;
+
+            Vector3 offset = targetAnchor.transform.position - sourceAnchor.transform.position;
+            temp.transform.position = offset;
+            temp.SetActive(true);
+            UpdatePhysicsImmediately(temp);
+
+            if (!WouldOverlap(temp))
+            {
+                sourceAnchor.isOccupied = true;
+                return temp;
+            }
+
+            temp.SetActive(false);
+        }
+
+        DestroyImmediate(temp);
+        return null;
+    }
+
+    // NEW: Cap all remaining dead ends with directional end caps
+    void CapAllDeadEnds()
+    {
+        int cappedCount = 0;
+
+        foreach (var anchor in openAnchors)
+        {
+            if (anchor == null || anchor.isOccupied) continue;
+
+            GameObject capPrefab = GetEndCapForDirection(anchor.direction);
+            if (capPrefab == null) continue;
+
+            GameObject cap = Instantiate(capPrefab, anchor.transform.position, Quaternion.identity, anchor.transform.parent);
+            //OrientEndCap(cap, anchor.direction);
+
+            cap.name = "CAP_" + capPrefab.name;
+            anchor.isOccupied = true;
+            cappedCount++;
+            deadEndCount++;
+        }
+
+        openAnchors.Clear();
+
+        if (cappedCount > 0)
+            Debug.Log($"Capped {cappedCount} dead ends");
+    }
+
+    // NEW: Get correct end cap based on direction
+    GameObject GetEndCapForDirection(Direction dir)
+    {
+        switch (dir)
+        {
+            case Direction.Top: return endCapTop;
+            case Direction.Bottom: return endCapBottom;
+            case Direction.Left: return endCapLeft;
+            case Direction.Right: return endCapRight;
+            default: return null;
+        }
+    }
+
+    //// NEW: Rotate end cap to face correct direction
+    //void OrientEndCap(GameObject cap, Direction dir)
+    //{
+    //    float zRotation = 0f;
+    //    switch (dir)
+    //    {
+    //        case Direction.Top: zRotation = 180f; break;
+    //        case Direction.Bottom: zRotation = 0f; break;
+    //        case Direction.Left: zRotation = 270f; break;
+    //        case Direction.Right: zRotation = 90f; break;
+    //    }
+    //    cap.transform.rotation = Quaternion.Euler(0, 0, zRotation);
+    //}
+
     bool WouldOverlap(GameObject candidate)
     {
-        // METHOD 1: Physics2D Check (Most accurate for Tilemaps)
         Collider2D[] candidateColliders = candidate.GetComponentsInChildren<Collider2D>();
 
         if (candidateColliders.Length > 0)
@@ -185,32 +358,26 @@ public class DungeonGenerator : MonoBehaviour
 
             foreach (var col in candidateColliders)
             {
-                // Skip disabled colliders or triggers
                 if (!col.enabled || col.isTrigger) continue;
 
-                // Shrink collider slightly to allow touching walls
                 Vector2 size = col.bounds.size;
                 size -= Vector2.one * overlapTolerance * 2f;
 
-                if (size.x <= 0 || size.y <= 0) continue; // Too small
+                if (size.x <= 0 || size.y <= 0) continue;
 
-                // Check overlap at this position
                 int count = Physics2D.OverlapBox(col.bounds.center, size, 0f, filter, results);
 
                 for (int i = 0; i < count; i++)
                 {
                     Collider2D hit = results[i];
-
-                    // Ignore if it's part of the candidate itself
                     if (hit.transform.IsChildOf(candidate.transform)) continue;
 
-                    // Check if it belongs to a placed piece
                     foreach (var piece in placedPieces)
                     {
                         if (piece != null && hit.transform.IsChildOf(piece.transform))
                         {
                             if (logPlacementAttempts)
-                                Debug.Log($"Overlap detected: {candidate.name} would hit {piece.name} at {hit.bounds.center}");
+                                Debug.Log($"Overlap detected: {candidate.name} would hit {piece.name}");
                             return true;
                         }
                     }
@@ -219,9 +386,8 @@ public class DungeonGenerator : MonoBehaviour
             return false;
         }
 
-        // METHOD 2: Bounds Check (Fallback)
         Bounds candidateBounds = GetObjectBounds(candidate);
-        candidateBounds.Expand(-overlapTolerance); // Shrink slightly
+        candidateBounds.Expand(-overlapTolerance);
 
         foreach (var piece in placedPieces)
         {
@@ -239,7 +405,6 @@ public class DungeonGenerator : MonoBehaviour
 
     Bounds GetObjectBounds(GameObject obj)
     {
-        // Try to calculate from Tilemaps (more accurate than TilemapAnchor)
         Tilemap[] tilemaps = obj.GetComponentsInChildren<Tilemap>();
         if (tilemaps.Length > 0)
         {
@@ -250,11 +415,8 @@ public class DungeonGenerator : MonoBehaviour
             {
                 tm.CompressBounds();
                 Bounds localBounds = tm.localBounds;
-
-                // Convert to world space properly
                 Vector3 worldCenter = tm.transform.TransformPoint(localBounds.center);
                 Vector3 worldSize = Vector3.Scale(localBounds.size, tm.transform.lossyScale);
-
                 Bounds worldBounds = new Bounds(worldCenter, worldSize);
 
                 if (!hasBounds)
@@ -271,7 +433,6 @@ public class DungeonGenerator : MonoBehaviour
             if (hasBounds) return totalBounds;
         }
 
-        // Fallback to Collider2D
         Collider2D col = obj.GetComponentInChildren<Collider2D>();
         if (col != null)
             return col.bounds;
@@ -281,13 +442,11 @@ public class DungeonGenerator : MonoBehaviour
 
     void UpdatePhysicsImmediately(GameObject obj)
     {
-        // Force Unity to update collider positions immediately (usually waits until end of frame)
         Collider2D[] colliders = obj.GetComponentsInChildren<Collider2D>();
         foreach (var col in colliders)
         {
             if (col != null)
             {
-                // Accessing bounds forces an update
                 var _ = col.bounds;
             }
         }
@@ -336,26 +495,30 @@ public class DungeonGenerator : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(startPosition, 0.5f);
 
-        // Visualize open anchors
-        Gizmos.color = Color.yellow;
+        // NEW: Color code anchors by tag
         foreach (var anchor in openAnchors)
         {
-            if (anchor != null)
+            if (anchor == null) continue;
+
+            if (anchor.gameObject.tag == roomAnchorTag)
+                Gizmos.color = Color.magenta;
+            else if (anchor.gameObject.tag == hallwayAnchorTag)
+                Gizmos.color = Color.cyan;
+            else
+                Gizmos.color = Color.yellow;
+
+            Vector3 dir = Vector3.zero;
+            switch (anchor.direction)
             {
-                Vector3 dir = Vector3.zero;
-                switch (anchor.direction)
-                {
-                    case Direction.Top: dir = Vector3.up; break;
-                    case Direction.Bottom: dir = Vector3.down; break;
-                    case Direction.Left: dir = Vector3.left; break;
-                    case Direction.Right: dir = Vector3.right; break;
-                }
-                Gizmos.DrawRay(anchor.transform.position, dir * 0.3f);
-                Gizmos.DrawWireSphere(anchor.transform.position, 0.15f);
+                case Direction.Top: dir = Vector3.up; break;
+                case Direction.Bottom: dir = Vector3.down; break;
+                case Direction.Left: dir = Vector3.left; break;
+                case Direction.Right: dir = Vector3.right; break;
             }
+            Gizmos.DrawRay(anchor.transform.position, dir * 0.3f);
+            Gizmos.DrawWireSphere(anchor.transform.position, 0.15f);
         }
 
-        // Visualize bounds of placed pieces (for debugging overlap issues)
         if (drawBounds && Application.isPlaying)
         {
             Gizmos.color = new Color(1, 0, 0, 0.3f);

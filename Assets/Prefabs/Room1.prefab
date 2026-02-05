@@ -3882,6 +3882,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TopSideHallwayAnchor
       objectReference: {fileID: 0}
+    - target: {fileID: 5459475310454472221, guid: 9a1021d400657304da700aefb115efc1, type: 3}
+      propertyPath: m_TagString
+      value: RoomAnchor
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

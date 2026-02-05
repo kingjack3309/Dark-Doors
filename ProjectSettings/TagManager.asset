@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Statue
   - Healthbar
+  - RoomAnchor
+  - HallwayAnchor
   layers:
   - Default
   - TransparentFX
