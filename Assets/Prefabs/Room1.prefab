@@ -1257,7 +1257,7 @@ SortingGroup:
   m_GameObject: {fileID: 2531470526741541033}
   m_Enabled: 1
   m_SortingLayerID: 967669247
-  m_SortingLayer: -2
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_SortAtRoot: 0
 --- !u!1 &3061733495430159856
@@ -3544,7 +3544,7 @@ SortingGroup:
   m_GameObject: {fileID: 3061733495430159856}
   m_Enabled: 1
   m_SortingLayerID: 1463835581
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_SortAtRoot: 0
 --- !u!1 &5383438626913757653
@@ -3635,7 +3635,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.4}
+  m_Offset: {x: 0, y: -3.2}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3646,7 +3646,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 15, y: 16}
+  m_Size: {x: 29.56, y: 21.76}
   m_EdgeRadius: 0
 --- !u!1 &6512630284064020389
 GameObject:
