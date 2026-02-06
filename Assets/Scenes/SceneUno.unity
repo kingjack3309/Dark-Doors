@@ -252,7 +252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 246058445603208886, guid: ef9a915e2a6226d45bfbf486884794bf, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 462223487132898962, guid: ef9a915e2a6226d45bfbf486884794bf, type: 3}
       propertyPath: m_Mass
@@ -574,6 +574,8 @@ MonoBehaviour:
   - {fileID: 5383438626913757653, guid: a6f091fcc7cd8764bad59b9d532314d8, type: 3}
   - {fileID: 2782657685984950792, guid: b9356ab2e8ca2144084c9dd51945691f, type: 3}
   - {fileID: 8133159697757360651, guid: aaeebdddc165b954aaf7958555f7ceb2, type: 3}
+  - {fileID: 5691772673855117856, guid: 965ea58c7b9de954195701d364043a36, type: 3}
+  - {fileID: 8363430175273787475, guid: 58f56225e90193f43aa99451ad162783, type: 3}
   endRoomPrefab: {fileID: 3894953683336377960, guid: 21774329193a8d041a48a23d1573dc2a, type: 3}
   endCapTop: {fileID: 6273064598112269603, guid: 9ae8a679ec30c9b4a98a9fb12c568350, type: 3}
   endCapBottom: {fileID: 1166998583016927036, guid: f379e4e2adcc86049a076f47cde186c6, type: 3}
@@ -581,12 +583,12 @@ MonoBehaviour:
   endCapRight: {fileID: 1063204259696271311, guid: eac74e56fb0407644a9d4db28581150d, type: 3}
   startPosition: {x: 0, y: 1, z: 0}
   maxIterations: 400
-  roomSpawnChance: 20
+  roomSpawnChance: 30
   clearOnGenerate: 1
   randomizeAnchorOrder: 1
   maxPrefabAttempts: 12
   overlapTolerance: 0.25
-  anchorOverlapCheckRadius: 0.1
+  anchorOverlapCheckRadius: 0.105
   roomAnchorTag: RoomAnchor
   hallwayAnchorTag: HallwayAnchor
   randomSeed: 0
@@ -1055,7 +1057,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: ff75ad39
+  m_ApplyToSortingLayers: bd5b4057ff75ad3900000000b99698d883eda95ef7395e78b54c7daf3d71ea78
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
