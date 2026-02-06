@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyScript : MonoBehaviour
 {
@@ -13,11 +14,17 @@ public class EnemyScript : MonoBehaviour
 
     AudioSource audioSource;
 
+    NavMeshAgent agent;
+
     public bool canMove = true;
 
     // Start is called before the first frame update
     void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+
         rb = GetComponent<Rigidbody2D>();
 
         audioSource = GetComponent<AudioSource>();
@@ -34,13 +41,13 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
-     private void OnTriggerEnter2D(Collider2D other)
-     {
+    private void OnTriggerEnter2D(Collider2D other)
+    {
         if (other.gameObject.CompareTag("Player") && canMove && (gameObject.tag == "Enemy"))
         {
             audioSource.Play();
         }
-     }
+    }
 
     private void OnTriggerStay2D(Collider2D other)
     {
@@ -49,7 +56,7 @@ public class EnemyScript : MonoBehaviour
             Vector2 playerPosition = other.gameObject.transform.position;
 
             Vector2 newPosition = Vector2.MoveTowards(gameObject.transform.position, playerPosition, speed * Time.deltaTime);
-            
+
             rb.MovePosition(newPosition);
         }
     }
@@ -58,7 +65,7 @@ public class EnemyScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            
+
         }
     }
 }
