@@ -578,7 +578,7 @@ MonoBehaviour:
   endCapLeft: {fileID: 5459856918699915879, guid: b6c2c0e726b27834da4dc2c56c2c24fa, type: 3}
   endCapRight: {fileID: 1063204259696271311, guid: eac74e56fb0407644a9d4db28581150d, type: 3}
   startPosition: {x: 0, y: 1, z: 0}
-  maxIterations: 400
+  maxIterations: 250
   roomSpawnChance: 30
   clearOnGenerate: 1
   randomizeAnchorOrder: 1
@@ -1053,7 +1053,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: bd5b4057ff75ad3900000000b99698d883eda95ef7395e78b54c7daf3d71ea78
+  m_ApplyToSortingLayers: ff75ad39
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0

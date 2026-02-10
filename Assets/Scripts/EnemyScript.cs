@@ -14,16 +14,16 @@ public class EnemyScript : MonoBehaviour
 
     AudioSource audioSource;
 
-    NavMeshAgent agent;
+    //NavMeshAgent agent;
 
     public bool canMove = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false;
-        agent.updateUpAxis = false;
+        //agent = GetComponent<NavMeshAgent>();
+        //agent.updateRotation = false;
+        //agent.updateUpAxis = false;
 
         rb = GetComponent<Rigidbody2D>();
 
@@ -65,7 +65,7 @@ public class EnemyScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-
+            audioSource.Play();
         }
     }
 }
