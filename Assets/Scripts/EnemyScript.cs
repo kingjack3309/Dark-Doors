@@ -8,24 +8,22 @@ public class EnemyScript : MonoBehaviour
     [Header("enemy probablity between 1 & 0")]
     public float enemyPercentage = 0.5f;
 
-    private float speed = 1.9f;
-
-    Rigidbody2D rb;
-
     AudioSource audioSource;
 
-    //NavMeshAgent agent;
+    NavMeshAgent agent;
+
+    GameObject target;
 
     public bool canMove = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        //agent = GetComponent<NavMeshAgent>();
-        //agent.updateRotation = false;
-        //agent.updateUpAxis = false;
+        target = GameObject.FindGameObjectWithTag("Player");
 
-        rb = GetComponent<Rigidbody2D>();
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
 
         audioSource = GetComponent<AudioSource>();
 
@@ -53,19 +51,8 @@ public class EnemyScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && canMove && (gameObject.tag == "Enemy"))
         {
-            Vector2 playerPosition = other.gameObject.transform.position;
+            agent.SetDestination(target.transform.position);
 
-            Vector2 newPosition = Vector2.MoveTowards(gameObject.transform.position, playerPosition, speed * Time.deltaTime);
-
-            rb.MovePosition(newPosition);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            audioSource.Play();
         }
     }
 }

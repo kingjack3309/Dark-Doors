@@ -1,3 +1,4 @@
+using NavMeshPlus.Components;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -46,8 +47,12 @@ public class DungeonGenerator : MonoBehaviour
     private List<GameObject> placedPieces = new List<GameObject>();
     private int deadEndCount = 0;
 
+    NavMeshSurface navMeshSurface;
+
     void Start()
     {
+        navMeshSurface = GetComponent<NavMeshSurface>();
+
         if (generateOnStart) Generate();
     }
 
@@ -88,6 +93,8 @@ public class DungeonGenerator : MonoBehaviour
 
         // PHASE 3: Cap all remaining dead ends (with anchor overlap check)
         CapAllDeadEnds();
+
+        navMeshSurface.BuildNavMesh();
 
         Debug.Log($"Generation complete: {placedPieces.Count} pieces, {deadEndCount} dead ends capped.");
     }

@@ -415,6 +415,7 @@ GameObject:
   - component: {fileID: 8763474006684162877}
   - component: {fileID: 3937213770364387464}
   - component: {fileID: 6527646172532405965}
+  - component: {fileID: 448096405362807610}
   m_Layer: 0
   m_Name: door closed
   m_TagString: Untagged
@@ -696,3 +697,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openDoor: {fileID: 5955598995477511777}
   e: {fileID: 1056677320009123786}
+--- !u!208 &448096405362807610
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897577867640576978}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1, y: 1, z: 0.00001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 1, y: -5, z: 0}
+  m_TimeToStationary: 0.5

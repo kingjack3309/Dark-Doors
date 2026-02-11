@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 263003892926474696}
   - component: {fileID: 3339175083087730436}
   - component: {fileID: 7950092636494258186}
+  - component: {fileID: 1642521484843407944}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -405,3 +406,19 @@ CompositeCollider2D:
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 5795755873688394017}
+--- !u!114 &1642521484843407944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5795755873688394017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
