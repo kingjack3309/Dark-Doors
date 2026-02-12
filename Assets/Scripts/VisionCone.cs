@@ -89,7 +89,7 @@ public class VisionCone : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            other.GetComponent<EnemyScript>().canMove = false;
+            other.GetComponent<EnemyScript>().isSeen = true;
         }
     }
 
@@ -97,7 +97,7 @@ public class VisionCone : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            other.GetComponent<EnemyScript>().canMove = true;
+            other.GetComponent<EnemyScript>().isSeen = false;
         }
     }
 

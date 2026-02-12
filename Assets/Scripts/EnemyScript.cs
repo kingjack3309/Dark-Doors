@@ -16,6 +16,9 @@ public class EnemyScript : MonoBehaviour
 
     public bool canMove = true;
 
+    [HideInInspector]
+    public bool isSeen = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,8 +54,10 @@ public class EnemyScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && canMove && (gameObject.tag == "Enemy"))
         {
-            agent.SetDestination(target.transform.position);
-
+            if (!isSeen)
+            {
+                agent.SetDestination(target.transform.position);
+            }
         }
     }
 }

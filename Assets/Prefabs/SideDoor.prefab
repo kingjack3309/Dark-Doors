@@ -184,6 +184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   closeDoor: {fileID: 8599786134097377422}
   e: {fileID: 5621515727424900386}
+  navObstacle: {fileID: 4906471702573053016}
 --- !u!61 &6744915591599703871
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -239,6 +240,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4431282828212767930}
   - component: {fileID: 8185931594528149026}
+  - component: {fileID: 4906471702573053016}
   m_Layer: 0
   m_Name: SideDoor
   m_TagString: Untagged
@@ -274,6 +276,22 @@ SortingGroup:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!208 &4906471702573053016
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2183870744531613413}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.75, y: 1.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -6.73, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &5397439427959707562
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,3 +698,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openDoor: {fileID: 1020900234719131451}
   e: {fileID: 5621515727424900386}
+  navObstacle: {fileID: 4906471702573053016}

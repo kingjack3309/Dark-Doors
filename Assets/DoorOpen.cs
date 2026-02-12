@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DoorOpen : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class DoorOpen : MonoBehaviour
     [SerializeField] GameObject openDoor;
 
     [SerializeField] GameObject e;
+
+    public NavMeshObstacle navObstacle;
 
     private void OnTriggerStay2D(Collider2D other)
     {
@@ -44,6 +47,7 @@ public class DoorOpen : MonoBehaviour
     IEnumerator openDaDoor()
     {
         yield return new WaitForSeconds(2);
+        navObstacle.enabled = false;
         openDoor.SetActive(true);
         gameObject.SetActive(false);
     }
