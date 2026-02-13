@@ -46,7 +46,7 @@ public class DoorOpen : MonoBehaviour
 
     IEnumerator openDaDoor()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
         navObstacle.enabled = false;
         openDoor.SetActive(true);
         gameObject.SetActive(false);

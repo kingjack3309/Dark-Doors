@@ -94,9 +94,9 @@ GameObject:
   - component: {fileID: 3454432129819296888}
   - component: {fileID: -6464387638647620633}
   - component: {fileID: 5862149467136242288}
-  - component: {fileID: 412471810897954499}
   - component: {fileID: 5236616764262655620}
   - component: {fileID: -8677510485961716554}
+  - component: {fileID: 6847077281932747878}
   m_Layer: 7
   m_Name: WeepingAngelStatue
   m_TagString: Enemy
@@ -251,6 +251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPercentage: 0.3
   canMove: 1
+  isSeen: 0
 --- !u!58 &5862149467136242288
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -286,33 +287,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 1.140625}
   serializedVersion: 2
   m_Radius: 20
---- !u!50 &412471810897954499
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2480952542033969913}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 128
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!82 &5236616764262655620
 AudioSource:
   m_ObjectHideFlags: 0
@@ -431,3 +405,30 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!50 &6847077281932747878
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2480952542033969913}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 3
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

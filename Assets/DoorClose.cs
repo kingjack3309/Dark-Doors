@@ -42,7 +42,7 @@ public class DoorClose : MonoBehaviour
 
     IEnumerator closeDaDoor()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
         navObstacle.enabled = true;
         closeDoor.SetActive(true);
         gameObject.SetActive(false);

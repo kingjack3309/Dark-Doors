@@ -54,8 +54,13 @@ public class EnemyScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && canMove && (gameObject.tag == "Enemy"))
         {
-            if (!isSeen)
+            if (isSeen)
             {
+                agent.enabled = false;
+            }
+            else
+            {
+                agent.enabled = true;
                 agent.SetDestination(target.transform.position);
             }
         }
