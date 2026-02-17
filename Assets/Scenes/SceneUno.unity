@@ -975,8 +975,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7560973335c1c74f80b0258209977e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewDistance: 6
-  fovAngle: 100
+  viewDistance: 8
+  fovAngle: 90
   rayCount: 200
   obstacleMask:
     serializedVersion: 2
@@ -1622,7 +1622,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: ff75ad39
+  m_ApplyToSortingLayers: ff75ad393d71ea78
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0

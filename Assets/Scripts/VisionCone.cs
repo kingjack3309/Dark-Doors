@@ -16,17 +16,43 @@ public class VisionCone : MonoBehaviour
 
     private Light2D visionLight;
 
+    PolygonCollider2D polygonCollider;
+
+    private bool canSee = true;
+
     void Start()
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         visionLight = GetComponent<Light2D>();
+        polygonCollider = GetComponent<PolygonCollider2D>();
     }
 
-    void LateUpdate()
+    void Update()
     {
         GenerateCone();
+
+        if (!canSee)
+        {
+            visionLight.enabled = false;
+            polygonCollider.enabled = false;
+        }
+
+        else
+        {
+            visionLight.enabled = true;
+            polygonCollider.enabled = true;
+        }
         
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            canSee = false;
+        }
+        else if (Input.GetKeyUp(KeyCode.E))
+        {
+            canSee = true;
+        }
+
     }
 
     void GenerateCone()
