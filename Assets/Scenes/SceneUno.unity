@@ -1100,7 +1100,7 @@ MonoBehaviour:
   endCapLeft: {fileID: 5459856918699915879, guid: b6c2c0e726b27834da4dc2c56c2c24fa, type: 3}
   endCapRight: {fileID: 1063204259696271311, guid: eac74e56fb0407644a9d4db28581150d, type: 3}
   startPosition: {x: 0, y: 1, z: 0}
-  maxIterations: 200
+  maxIterations: 100
   roomSpawnChance: 30
   clearOnGenerate: 1
   randomizeAnchorOrder: 1
@@ -1111,9 +1111,9 @@ MonoBehaviour:
   hallwayAnchorTag: HallwayAnchor
   randomSeed: 0
   generateOnStart: 1
-  drawBounds: 1
-  logPlacementAttempts: 1
-  regenerateKey: 32
+  drawBounds: 0
+  logPlacementAttempts: 0
+  regenerateKey: 279
   logDeadEnds: 1
 --- !u!114 &981587355
 MonoBehaviour:
