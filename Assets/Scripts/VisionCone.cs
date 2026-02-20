@@ -14,11 +14,11 @@ public class VisionCone : MonoBehaviour
     private Vector3[] vertices;
     private int[] triangles;
 
-    private Light2D visionLight;
+    Light2D visionLight;
 
     PolygonCollider2D polygonCollider;
 
-    private bool canSee = true;
+    public bool canSee = true;
 
     void Start()
     {
@@ -44,14 +44,14 @@ public class VisionCone : MonoBehaviour
             polygonCollider.enabled = true;
         }
         
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            canSee = false;
-        }
-        else if (Input.GetKeyUp(KeyCode.E))
-        {
-            canSee = true;
-        }
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    canSee = false;
+        //}
+        //else if (Input.GetKeyUp(KeyCode.E))
+        //{
+        //    canSee = true;
+        //}
 
     }
 

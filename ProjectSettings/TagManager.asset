@@ -9,6 +9,7 @@ TagManager:
   - Healthbar
   - RoomAnchor
   - HallwayAnchor
+  - Vision Cone
   layers:
   - Default
   - TransparentFX

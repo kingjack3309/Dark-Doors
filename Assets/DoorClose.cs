@@ -11,16 +11,23 @@ public class DoorClose : MonoBehaviour
 
     public NavMeshObstacle navObstacle;
 
-    private void OnTriggerStay2D()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            StartCoroutine(closeDaDoor());
-        }
+    VisionCone visionCone;
+    PlayerController playerController;
 
-        if (Input.GetKeyUp(KeyCode.E))
+    private void Start()
+    {
+        visionCone = GameObject.FindGameObjectWithTag("Vision Cone").GetComponent<VisionCone>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
         {
-            StopCoroutine(closeDaDoor());
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                StartCoroutine(closeDaDoor());
+            }
         }
     }
 
@@ -42,7 +49,11 @@ public class DoorClose : MonoBehaviour
 
     IEnumerator closeDaDoor()
     {
+        visionCone.canSee = false;
+        playerController.speed = 0;
         yield return new WaitForSeconds(1.5f);
+        playerController.speed = 7;
+        visionCone.canSee = true; 
         navObstacle.enabled = true;
         closeDoor.SetActive(true);
         gameObject.SetActive(false);
