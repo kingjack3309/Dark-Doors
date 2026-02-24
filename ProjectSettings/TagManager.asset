@@ -47,20 +47,20 @@ TagManager:
   - name: floor
     uniqueID: 1463835581
     locked: 0
+  - name: player
+    uniqueID: 3633878713
+    locked: 0
+  - name: doors
+    uniqueID: 2019441143
+    locked: 0
   - name: tilemap
     uniqueID: 967669247
     locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: player
-    uniqueID: 3633878713
-    locked: 0
   - name: enemies
     uniqueID: 1588194691
-    locked: 0
-  - name: doors
-    uniqueID: 2019441143
     locked: 0
   - name: pillars
     uniqueID: 2944224437
